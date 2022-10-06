@@ -47,10 +47,11 @@ public class DroolsAppApplication extends Application {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getRequiredDocuments(Account account) throws RulesEngineException {
 
+        _loadRules("account", "rules/account_rules.drl");
+
+        // This is how you fire the rules for a given entity.
         List<Fact<?>> facts = new ArrayList<>();
         facts.add(new Fact<>("account", account));
-
-        _loadRules("account", "rules/account_rules.drl");
         _rulesEngine.execute("account", facts);
 
         return Response.ok().entity(account.getRequiredDocuments()).build();
@@ -60,7 +61,9 @@ public class DroolsAppApplication extends Application {
     private void _loadRules(String domain, String filePath) throws RulesEngineException {
         if (!_rulesEngine.containsRuleDomain(domain)) {
 			System.out.println("Applying rules...");
-            String applicantRules = _loadRuleFromResource(filePath);
+
+            // This is how you apply rules from a String representation of a DRL file into the RulesEngine.
+            String applicantRules = _loadRuleFromResource(filePath); // helper method that reads a file as a string
             RulesResourceRetriever rulesResourceRetriever =
                     new RulesResourceRetriever(
                             new StringResourceRetriever(applicantRules),
