@@ -1,0 +1,24 @@
+package com.liferay.sthree.domain
+import dev.gabriel.liferay.drools.model.Account
+rule "USA"
+
+    when
+       account : Account(country == "USA");
+    then
+       account.addRequiredDocument("Proof of residency in the USA");
+    end;
+
+    rule "USA Driver"
+    when
+       account : Account(country == "USA" && carDriver == true);
+    then
+       account.addRequiredDocument("USA Driver's license");
+    end;
+
+    rule "developer"
+    when
+       account : Account(position == "developer");
+    then
+       account.addRequiredDocument("Developer's resume as PDF");
+    end;
+

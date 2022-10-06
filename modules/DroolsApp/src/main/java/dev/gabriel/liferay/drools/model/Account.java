@@ -5,29 +5,10 @@ import java.util.List;
 
 public class Account {
 
-    String name;
-    int age;
     String country;
-    String state;
     String position;
-    boolean canDrive;
+    boolean carDriver;
     List<String> requiredDocuments = new ArrayList<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getCountry() {
         return country;
@@ -35,14 +16,6 @@ public class Account {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getPosition() {
@@ -53,19 +26,19 @@ public class Account {
         this.position = position;
     }
 
-    public boolean isCanDrive() {
-        return canDrive;
+    public boolean isCarDriver() {
+        return carDriver;
     }
 
-    public void setCanDrive(boolean canDrive) {
-        this.canDrive = canDrive;
+    public void setCanDrive(boolean carDriver) {
+        this.carDriver = carDriver;
     }
 
-    public List<String> getNecessaryDocuments() {
+    public List<String> getRequiredDocuments() {
         return requiredDocuments;
     }
 
-    public void addNecessaryDocuments(String document) {
+    public void addRequiredDocument(String document) {
         this.requiredDocuments.add(document);
     }
 }
