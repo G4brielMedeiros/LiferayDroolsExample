@@ -1,19 +1,5 @@
 package dev.gabriel.liferay.drools.application;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
@@ -22,6 +8,21 @@ import dev.gabriel.liferay.drools.model.Account;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author gabriel
@@ -45,7 +46,7 @@ public class DroolsAppApplication extends Application {
     @Path("/getRequiredDocuments")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getRequiredDocuments(Account account) throws RulesEngineException {
+    public List<String> getRequiredDocuments(Account account) throws RulesEngineException {
 
         _loadRules("account", "rules/account_rules.drl");
 
@@ -54,7 +55,7 @@ public class DroolsAppApplication extends Application {
         facts.add(new Fact<>("account", account));
         _rulesEngine.execute("account", facts);
 
-        return Response.ok().entity(account.getRequiredDocuments()).build();
+        return account.getRequiredDocuments();
 
     }
 
